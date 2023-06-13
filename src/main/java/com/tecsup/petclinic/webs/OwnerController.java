@@ -4,6 +4,7 @@ import com.tecsup.petclinic.domain.OwnerTO;
 import com.tecsup.petclinic.domain.PetTO;
 import com.tecsup.petclinic.entities.Owner;
 import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.exception.OwnerNotFoundException;
 import com.tecsup.petclinic.mapper.OwnerMapper;
 import com.tecsup.petclinic.services.OwnerService;
 import lombok.extern.slf4j.Slf4j;
@@ -72,4 +73,18 @@ public class OwnerController {
 
     }
 
+    /**
+     *  Delete owner by id
+     *
+     * @param id
+     */
+     @DeleteMapping(value = "/owners/{id}")
+     ResponseEntity<String> delete(@PathVariable Integer id) {
+         try {
+             ownerService.deleteById(id);
+             return ResponseEntity.ok("Delete ID: " + id);
+         } catch (OwnerNotFoundException e) {
+             return ResponseEntity.notFound().build();
+         }
+     }
 }

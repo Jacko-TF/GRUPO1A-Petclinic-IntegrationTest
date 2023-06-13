@@ -1,6 +1,7 @@
 package com.tecsup.petclinic.webs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import com.tecsup.petclinic.domain.OwnerTO;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
@@ -10,10 +11,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -82,12 +83,33 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
 
     }
+
     @Test
-    public void testFindOwnerById() throws Exception{
+    public void testDeleteOwner() throws Exception{
+        String FIRST_NAME = "LUIS";
+        String LAST_NAME = "CORRALES";
+        String ADDRESS = "CALLE 1";
+        String CITY = "SANTA ANITA";
+        String TELEPHONE = "964950100";
 
-        int OWNER_ID = "1";
-        String OWNER_NAME = "Mariajose";
+        OwnerTO newOwnerTO = new OwnerTO();
+        newOwnerTO.setFirstName(FIRST_NAME);
+        newOwnerTO.setLastName(LAST_NAME);
+        newOwnerTO.setAddress(ADDRESS);
+        newOwnerTO.setCity(CITY);
+        newOwnerTO.setTelephone(TELEPHONE);
 
+        ResultActions mvcActions = mockMvc.perform(post("/owners")
+                        .content(om.writeValueAsString(newOwnerTO))
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
 
+        String response = mvcActions.andReturn().getResponse().getContentAsString();
+        Integer id = JsonPath.parse(response).read("$.id");
+
+        mockMvc.perform(delete("/owners/"+id))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 }
