@@ -82,4 +82,12 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
 
     }
+    @Test
+    public void testFindOwnerById() throws Exception{
+
+        int OWNER_ID = "1";
+        String OWNER_NAME = "Mariajose";
+
+
+    }
 }
