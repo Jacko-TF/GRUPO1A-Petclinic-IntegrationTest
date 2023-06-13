@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.aspectj.bridge.MessageUtil.fail;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -145,5 +146,23 @@ public class OwnerServiceTest {
         assertEquals(OWNER_CITY_UPDATE, ownerUpdated.getCity());
         assertEquals(OWNER_TELEFONO_UPDATE, ownerUpdated.getTelephone());
     }
+    @Test
+    public void testOwnerById(){
+        int OWNER_ID = 100;
+        String OWNER_FIRST_NAME = "Mariajsoe";
+        String OWNER_LAST_NAME  = "Soles";
+        String OWNER_ADRESS = "Las Chirimoyas 109";
+        String OWNER_CITY = "Los Olivos";
+        String OWNER_TELEFONO = "975825008";
+
+        Owner owner = new Owner(OWNER_ID, OWNER_FIRST_NAME, OWNER_LAST_NAME, OWNER_ADRESS, OWNER_CITY, OWNER_TELEFONO);
+        Owner ownerCreated = this.ownerService.create(owner);
+
+        try{
+            owner = ownerService.F
+        }
+
+    }
+
 
 }

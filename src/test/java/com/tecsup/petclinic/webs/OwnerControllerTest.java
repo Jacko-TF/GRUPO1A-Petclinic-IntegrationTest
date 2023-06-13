@@ -2,6 +2,15 @@ package com.tecsup.petclinic.webs;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tecsup.petclinic.domain.OwnerTO;
+import com.tecsup.petclinic.domain.PetTO;
+import com.tecsup.petclinic.entities.Owner;
+import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.exception.OwnerNotFoundException;
+import com.tecsup.petclinic.exception.PetNotFoundException;
+import com.tecsup.petclinic.mapper.OwnerMapper;
+import com.tecsup.petclinic.mapper.PetMapper;
+import com.tecsup.petclinic.services.OwnerService;
+import com.tecsup.petclinic.services.PetService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +18,12 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
+import static org.aspectj.bridge.MessageUtil.fail;
 import static org.hamcrest.CoreMatchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -22,7 +35,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author jacko tinoco
  *
  */
-
 @AutoConfigureMockMvc
 @SpringBootTest
 @Slf4j
@@ -32,6 +44,11 @@ public class OwnerControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+    //@Autowired
+    private OwnerService ownerService;
+
+    //@Autowired
+    private OwnerMapper mapper;
 
     @Test
     public void testFindAllOwners() throws Exception {
@@ -46,7 +63,6 @@ public class OwnerControllerTest {
                 //		    .andExpect(jsonPath("$", hasSize(NRO_RECORD)))
                 .andExpect(jsonPath("$[0].id", is(ID_FIRST_RECORD)));
     }
-
 
 
     /**
@@ -82,4 +98,40 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
 
     }
+    /**
+     * @throws Exception
+     */
+
+    /**
+     * Find owner by id
+     *
+     * @param id
+     * @return
+     * @throws OwnerNotFoundException
+     */
+    @Test
+    public void testFindById() throws Exception {
+        String OWNER_ID= 1;
+        OwnerTO newOwnerTO = new OwnerTO();
+        newOwnerTO.setFirstName(OWNER_ID);
+
+
+    }
+    @GetMapping(value = "/owners/{id}")
+    ResponseEntity<OwnerTO> findById(@PathVariable Integer id) {
+
+        OwnerTO ownerTO = null;
+
+        try {
+            Owner owner = ownerService.findById(id);
+            ownerTO = this.mapper.toOwnerTO(owner);
+
+        } catch (OwnerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ownerTO);
+
+    }
+}
+
 }
