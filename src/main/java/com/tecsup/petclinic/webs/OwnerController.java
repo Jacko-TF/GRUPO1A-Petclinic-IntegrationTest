@@ -95,5 +95,18 @@ public class OwnerController {
         return ResponseEntity.ok(ownerTO);
     }
 
-
+    /**
+     *  Delete owner by id
+     *
+     * @param id
+     */
+    @DeleteMapping(value = "/owners/{id}")
+    ResponseEntity<String> delete(@PathVariable Integer id) {
+        try {
+            ownerService.deleteById(id);
+            return ResponseEntity.ok("Delete ID: " + id);
+        } catch (OwnerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
