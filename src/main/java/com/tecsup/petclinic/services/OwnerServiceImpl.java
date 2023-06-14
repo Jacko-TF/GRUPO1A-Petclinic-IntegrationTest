@@ -1,6 +1,7 @@
 package com.tecsup.petclinic.services;
 
 import com.tecsup.petclinic.entities.Owner;
+import com.tecsup.petclinic.entities.Pet;
 import com.tecsup.petclinic.exception.OwnerNotFoundException;
 import com.tecsup.petclinic.repositories.OwnerRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -83,10 +84,16 @@ public class OwnerServiceImpl implements OwnerService {
         return owner.get();
     }
 
-    @Override
-    public List<Owner> findByName(String firstName) {
-        return null;
-    }
+
+//    @Override
+//    public List<Owner> findByName(String firstName) {
+//        Optional<Owner> owners = OwnerRepository.findByName(firstName);
+//
+//        owners.stream().forEach(owner -> log.info("" + owner));
+//
+//        return owners;
+//    }
+
 
     @Override
     public List<Owner> findByFirstName(String firstName) {

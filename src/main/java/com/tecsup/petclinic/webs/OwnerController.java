@@ -4,6 +4,8 @@ import com.tecsup.petclinic.domain.OwnerTO;
 import com.tecsup.petclinic.domain.PetTO;
 import com.tecsup.petclinic.entities.Owner;
 import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.exception.OwnerNotFoundException;
+import com.tecsup.petclinic.exception.PetNotFoundException;
 import com.tecsup.petclinic.mapper.OwnerMapper;
 import com.tecsup.petclinic.services.OwnerService;
 import lombok.extern.slf4j.Slf4j;

@@ -102,36 +102,25 @@ public class OwnerControllerTest {
      * @throws Exception
      */
 
-    /**
-     * Find owner by id
-     *
-     * @param id
-     * @return
-     * @throws OwnerNotFoundException
-     */
     @Test
-    public void testFindById() throws Exception {
-        String OWNER_ID= 1;
-        OwnerTO newOwnerTO = new OwnerTO();
-        newOwnerTO.setFirstName(OWNER_ID);
+    public void testFindByFirstName() throws Exception {
+        int ID = 1;
+        String FIRST_NAME = "George";
+        String LAST_NAME = "Franklin";
+        String ADDRESS = "110 W. Liberty St.";
+        String CITY = "Madison";
+        String TELEPHONE = "6085551023";
 
-
+        mockMvc.perform(get("/owners/{first_name}",FIRST_NAME))  // Object must be BASIL
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(ID)))
+                .andExpect(jsonPath("$.firstName", is(FIRST_NAME)))
+                .andExpect(jsonPath("$.lastName", is(LAST_NAME)))
+                .andExpect(jsonPath("$.address", is(ADDRESS)))
+                .andExpect(jsonPath("$.city", is(CITY)))
+                .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
     }
-    @GetMapping(value = "/owners/{id}")
-    ResponseEntity<OwnerTO> findById(@PathVariable Integer id) {
-
-        OwnerTO ownerTO = null;
-
-        try {
-            Owner owner = ownerService.findById(id);
-            ownerTO = this.mapper.toOwnerTO(owner);
-
-        } catch (OwnerNotFoundException e) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(ownerTO);
-
-    }
-}
 
 }

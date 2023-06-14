@@ -29,7 +29,5 @@ public interface OwnerService {
 
     Owner findById(Integer id) throws OwnerNotFoundException;
 
-    List<Owner> findByName(String firstName);
-
-    List<Owner> findByFirstName(String firstName);
+    List<Owner> findByFirstName(String first_name);
 }
