@@ -49,7 +49,6 @@ public class OwnerControllerTest {
     }
 
 
-
     /**
      * @throws Exception
      */
@@ -81,7 +80,6 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.address", is(ADDRESS)))
                 .andExpect(jsonPath("$.city", is(CITY)))
                 .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
-
     }
 
     @Test
