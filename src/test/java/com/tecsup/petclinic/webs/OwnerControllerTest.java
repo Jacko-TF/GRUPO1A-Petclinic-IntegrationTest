@@ -49,7 +49,6 @@ public class OwnerControllerTest {
     }
 
 
-
     /**
      * @throws Exception
      */
@@ -81,7 +80,35 @@ public class OwnerControllerTest {
                 .andExpect(jsonPath("$.address", is(ADDRESS)))
                 .andExpect(jsonPath("$.city", is(CITY)))
                 .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
+    }
 
+    @Test
+    public void testDeleteOwner() throws Exception{
+        String FIRST_NAME = "LUIS";
+        String LAST_NAME = "CORRALES";
+        String ADDRESS = "CALLE 1";
+        String CITY = "SANTA ANITA";
+        String TELEPHONE = "964950100";
+
+        OwnerTO newOwnerTO = new OwnerTO();
+        newOwnerTO.setFirstName(FIRST_NAME);
+        newOwnerTO.setLastName(LAST_NAME);
+        newOwnerTO.setAddress(ADDRESS);
+        newOwnerTO.setCity(CITY);
+        newOwnerTO.setTelephone(TELEPHONE);
+
+        ResultActions mvcActions = mockMvc.perform(post("/owners")
+                        .content(om.writeValueAsString(newOwnerTO))
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isCreated());
+
+        String response = mvcActions.andReturn().getResponse().getContentAsString();
+        Integer id = JsonPath.parse(response).read("$.id");
+
+        mockMvc.perform(delete("/owners/"+id))
+                .andDo(print())
+                .andExpect(status().isOk());
     }
 
     @Test
