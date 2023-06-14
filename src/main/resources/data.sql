@@ -16,6 +16,7 @@ VALUES
 (12, 'Lucky', '2000-06-24', 2, 10),
 (13, 'Sly', '2002-06-08', 1, 10);
 
+<<<<<<< HEAD
 INSERT INTO
     owners (id, first_name, last_name, address, city, telephone)
 VALUES
@@ -29,3 +30,5 @@ VALUES
     (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683'),
     (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435'),
     (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487');
+=======
+>>>>>>> feature_arguedas
