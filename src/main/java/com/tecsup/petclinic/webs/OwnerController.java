@@ -75,6 +75,27 @@ public class OwnerController {
     }
 
     /**
+     * Find pet by id
+     *
+     * @param id
+     * @return
+     * @throws OwnerNotFoundException
+     */
+
+    @GetMapping(value = "/owners/{id}")
+    ResponseEntity<OwnerTO> findById(@PathVariable Integer id) {
+        OwnerTO ownerTO = null;
+        try {
+            Owner owner = ownerService.findById(id);
+            ownerTO  = this.mapper.toOwnerTO(owner);
+
+        } catch (OwnerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ownerTO);
+    }
+
+    /**
      *  Delete owner by id
      *
      * @param id
@@ -88,5 +109,4 @@ public class OwnerController {
             return ResponseEntity.notFound().build();
         }
     }
-
 }
