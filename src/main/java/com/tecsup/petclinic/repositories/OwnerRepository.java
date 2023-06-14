@@ -11,11 +11,12 @@ public interface OwnerRepository
         extends CrudRepository<Owner,Integer> {
     // Fetch owners by first_name
     List<Owner> findByFirstName(String first_name);
-
     // Fetch owners by id
-    List<Owner> findById(int Id);
+
 
     @Override
     List<Owner> findAll();
-
 }
+
+
+

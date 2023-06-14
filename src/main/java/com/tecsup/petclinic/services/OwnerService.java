@@ -26,7 +26,11 @@ public interface OwnerService {
     void deleteById(Integer id) throws OwnerNotFoundException;
 
     void deleteByName(String firstName) throws OwnerNotFoundException;
-
+    /**
+     *
+     * @param id
+     * @return
+     */
     Owner findById(Integer id) throws OwnerNotFoundException;
 
     List<Owner> findByName(String firstName);

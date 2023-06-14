@@ -4,6 +4,8 @@ import com.tecsup.petclinic.domain.OwnerTO;
 import com.tecsup.petclinic.domain.PetTO;
 import com.tecsup.petclinic.entities.Owner;
 import com.tecsup.petclinic.entities.Pet;
+import com.tecsup.petclinic.exception.OwnerNotFoundException;
+import com.tecsup.petclinic.exception.PetNotFoundException;
 import com.tecsup.petclinic.mapper.OwnerMapper;
 import com.tecsup.petclinic.services.OwnerService;
 import lombok.extern.slf4j.Slf4j;
@@ -71,5 +73,27 @@ public class OwnerController {
         return  ResponseEntity.status(HttpStatus.CREATED).body(newOwnerTO);
 
     }
+
+    /**
+     * Find pet by id
+     *
+     * @param id
+     * @return
+     * @throws OwnerNotFoundException
+     */
+
+    @GetMapping(value = "/owners/{id}")
+    ResponseEntity<OwnerTO> findById(@PathVariable Integer id) {
+        OwnerTO ownerTO = null;
+        try {
+            Owner owner = ownerService.findById(id);
+            ownerTO  = this.mapper.toOwnerTO(owner);
+
+        } catch (OwnerNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(ownerTO);
+    }
+
 
 }
