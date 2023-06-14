@@ -75,18 +75,25 @@ public class OwnerController {
     }
 
     /**
-     *  Delete owner by id
+     * Find pet by id
      *
      * @param id
+     * @return
+     * @throws OwnerNotFoundException
      */
-    @DeleteMapping(value = "/owners/{id}")
-    ResponseEntity<String> delete(@PathVariable Integer id) {
+
+    @GetMapping(value = "/owners/{id}")
+    ResponseEntity<OwnerTO> findById(@PathVariable Integer id) {
+        OwnerTO ownerTO = null;
         try {
-            ownerService.deleteById(id);
-            return ResponseEntity.ok("Delete ID: " + id);
+            Owner owner = ownerService.findById(id);
+            ownerTO  = this.mapper.toOwnerTO(owner);
+
         } catch (OwnerNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
+        return ResponseEntity.ok(ownerTO);
     }
+
 
 }

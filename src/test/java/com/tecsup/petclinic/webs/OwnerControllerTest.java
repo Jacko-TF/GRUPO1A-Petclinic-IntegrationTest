@@ -110,4 +110,28 @@ public class OwnerControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
+
+    @Test
+    public void testFindById() throws Exception {
+        int ID = 1;
+        String FIRST_NAME = "George";
+        String LAST_NAME = "Franklin";
+        String ADDRESS = "110 W. Liberty St.";
+        String CITY = "Madison";
+        String TELEPHONE = "6085551023";
+
+        mockMvc.perform(get("/owners/{id}",ID))  // Object must be BASIL
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(ID)))
+                .andExpect(jsonPath("$.firstName", is(FIRST_NAME)))
+                .andExpect(jsonPath("$.lastName", is(LAST_NAME)))
+                .andExpect(jsonPath("$.address", is(ADDRESS)))
+                .andExpect(jsonPath("$.city", is(CITY)))
+                .andExpect(jsonPath("$.telephone", is(TELEPHONE)));
+    }
+
+
+
 }
