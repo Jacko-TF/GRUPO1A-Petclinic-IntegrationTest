@@ -30,5 +30,6 @@ VALUES
     (8, 'Maria', 'Escobito', '345 Maple St.', 'Madison', '6085557683'),
     (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Madison', '6085559435'),
     (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487');
+    (11, 'Leon', 'Suyon', '2335 Independence La.', 'San Francisco', '6085557375');
 =======
 >>>>>>> feature_arguedas
